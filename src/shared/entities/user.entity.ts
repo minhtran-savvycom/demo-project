@@ -23,6 +23,11 @@ export class User extends BaseIdentityEntity {
   @Column('varchar', {
     nullable: false,
   })
+  email: string;
+
+  @Column('varchar', {
+    nullable: false,
+  })
   userName: string;
 
   @Column('varchar', {

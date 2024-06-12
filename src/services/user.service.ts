@@ -1,6 +1,10 @@
 import { Request, Response } from 'express';
 import { dataSource } from '../setting/configuration';
 import { User } from '../shared/entities/user.entity';
+import dotenv from 'dotenv';
+import bcrypt from 'bcrypt';
+
+dotenv.config();
 
 class UserService {
   private static _instance: UserService;
@@ -18,7 +22,11 @@ class UserService {
 
   async createUser(req: Request, res: Response) {
     try {
-      const user = dataSource.getRepository(User).create(req.body);
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      const user = dataSource.getRepository(User).create({
+        ...req.body,
+        password: hashedPassword,
+      });
       const result = await dataSource.getRepository(User).save(user);
       res.status(201).json(result);
     } catch (error) {

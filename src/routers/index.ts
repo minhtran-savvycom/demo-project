@@ -2,7 +2,11 @@ import express from 'express';
 import gameRouter from './game.router';
 import userRouter from './user.router';
 import publisherRouter from './pulisher.router';
+import authRouter from './auth.router';
 const router = express.Router();
+
+// Auth route.
+router.use('/auth', authRouter);
 
 // Game route.
 router.use('/game', gameRouter);

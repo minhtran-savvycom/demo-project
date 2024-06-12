@@ -12,6 +12,10 @@ export class CreateUserModel {
 
   @IsString()
   @IsNotEmpty()
+  email: string;
+
+  @IsString()
+  @IsNotEmpty()
   userName: string;
 
   @IsString()

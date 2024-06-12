@@ -1,6 +1,7 @@
-import { ExtractJwt, Strategy } from 'passport-jwt';
 import passport from 'passport';
-const UserModel = require('./model.js');
+import { ExtractJwt, Strategy } from 'passport-jwt';
+import { dataSource } from '../setting/configuration';
+import { User } from '../shared/entities/user.entity';
 
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -10,10 +11,15 @@ const opts = {
 passport.use(
   new Strategy(opts, async (payload: any, done: any) => {
     try {
-      const user = UserModel.findById(payload.id);
+      const user = await dataSource
+        .getRepository(User)
+        .findOneBy({ id: payload.id });
+
       if (user) return done(null, user);
     } catch (error) {
       return done(error);
     }
   }),
 );
+
+export default passport;
