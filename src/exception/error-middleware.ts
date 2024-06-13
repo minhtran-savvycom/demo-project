@@ -1,6 +1,6 @@
 // src/middlewares/error-middleware.ts
 import { Request, Response, NextFunction } from 'express';
-import HttpException from '../exception/http-exception';
+import HttpException from './http-exception';
 
 function errorMiddleware(
   error: HttpException,

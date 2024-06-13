@@ -4,11 +4,11 @@ import dotenv from 'dotenv';
 import express, { Express } from 'express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-import errorMiddleware from './middlewares/error-middlware';
 import router from './routers';
 import { dataSource } from './setting/configuration';
 import options from './setting/swagger';
 import passport from './authentication/passport';
+import errorMiddleware from './exception/error-middleware';
 
 dotenv.config();
 
