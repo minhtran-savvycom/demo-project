@@ -11,6 +11,7 @@ const opts = {
 passport.use(
   new Strategy(opts, async (payload: any, done: any) => {
     try {
+      console.log('payload', payload);
       const user = await dataSource
         .getRepository(User)
         .findOneBy({ id: payload.id });

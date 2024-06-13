@@ -6,13 +6,11 @@ import { Game } from './game.entity';
 export class Publisher extends BaseIdentityEntity {
   @Column('varchar', {
     nullable: false,
-    name: 'Name',
   })
   name: string;
 
   @Column('varchar', {
     nullable: true,
-    name: 'Address',
   })
   address: string;
 

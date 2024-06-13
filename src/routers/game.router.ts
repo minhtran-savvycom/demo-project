@@ -6,21 +6,13 @@ import { CreateGameModel } from '../shared/dtos/models/create-game.model';
 import { UpdateGameModel } from '../shared/dtos/models/update-game.model';
 const gameRouter = express.Router();
 
-gameRouter.get(
-  '/:id',
-  dtoValidationMiddleware(QueryGameResult),
-  function (req, res) {
-    gameController.getGameById(req, res);
-  },
-);
+gameRouter.get('/:id', function (req, res) {
+  gameController.getGameById(req, res);
+});
 
-gameRouter.get(
-  '/',
-  dtoValidationMiddleware(QueryGameResult),
-  function (req, res) {
-    gameController.findAllGames(req, res);
-  },
-);
+gameRouter.get('/', function (req, res) {
+  gameController.findAllGames(req, res);
+});
 
 gameRouter.post(
   '/',

@@ -9,19 +9,14 @@ function dtoValidationMiddleware(
   skipMissingProperties = false,
 ): RequestHandler {
   return (req, res, next) => {
-    console.log('middleware', req.body);
-
     if (!req.body || Object.keys(req.body).length === 0) {
       throw new HttpException(400, 'Request body is empty');
     }
 
     const dtoObj = plainToClass(type, req.body);
-    console.log(dtoObj);
     validate(dtoObj, { skipMissingProperties }).then(
       (errors: ValidationError[]) => {
-        console.log('pending');
         if (errors.length > 0) {
-          console.log('not pass');
           const dtoErrors = errors
             .map((error: ValidationError) =>
               Object.values(error.constraints || {}).join(', '),
@@ -29,7 +24,6 @@ function dtoValidationMiddleware(
             .join(', ');
           next(new HttpException(400, dtoErrors));
         } else {
-          console.log('pass');
           // Sanitize the object and call the next middleware
           sanitize(dtoObj);
           req.body = dtoObj;

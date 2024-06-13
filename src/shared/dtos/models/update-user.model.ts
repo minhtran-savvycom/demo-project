@@ -1,22 +1,31 @@
-import { Contains, IsInt, IsNotEmpty, IsString, Length } from 'class-validator';
-import { Game } from '../../entities/game.entity';
+import {
+  Contains,
+  IsArray,
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  Length,
+} from 'class-validator';
 
 export class UpdateUserModel {
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   firstName: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   lastName: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   userName: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   password: string;
 
-  games: Game[];
+  @IsOptional()
+  @IsArray()
+  gameNames: string[];
 }

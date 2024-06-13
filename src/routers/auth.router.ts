@@ -5,7 +5,7 @@ import { AuthModel } from '../shared/dtos/models/auth.model';
 const authRouter = express.Router();
 
 authRouter.post(
-  '/',
+  '/login',
   dtoValidationMiddleware(AuthModel),
   function (req, res, next) {
     authController.login(req, res, next);

@@ -41,7 +41,7 @@ class AuthService {
         {
           id: userExists.id,
         },
-        process.env.JWT_SECRET as string,
+        'secret',
         { expiresIn: '1d' },
       );
 

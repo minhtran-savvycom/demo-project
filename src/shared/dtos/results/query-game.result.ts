@@ -1,10 +1,11 @@
 import { Expose, Exclude } from 'class-transformer';
+import { BaseIdentityResult } from './base/base-identity.result';
 
 @Expose()
-export class QueryGameResult {
+export class QueryGameResult extends BaseIdentityResult {
+  @Expose()
   name: string;
 
-  text: string;
-
+  @Expose()
   yearRelease: number;
 }

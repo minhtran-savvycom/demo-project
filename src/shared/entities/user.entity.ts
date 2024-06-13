@@ -4,11 +4,13 @@ import {
   Column,
   ManyToMany,
   JoinTable,
+  Unique,
 } from 'typeorm';
 import { BaseIdentityEntity } from './base/base-identity.entity';
 import { Game } from './game.entity';
 
 @Entity()
+@Unique(['email'])
 export class User extends BaseIdentityEntity {
   @Column('varchar', {
     nullable: false,
@@ -35,7 +37,9 @@ export class User extends BaseIdentityEntity {
   })
   password: string;
 
-  @ManyToMany(() => Game, (g) => g.users)
+  @ManyToMany(() => Game, (g) => g.users, {
+    eager: true,
+  })
   @JoinTable({
     name: 'user_game', // table name for the junction table of this relation
     joinColumn: {

@@ -5,7 +5,6 @@ import { QueryUserResult } from '../shared/dtos/results/query-user.result';
 import { CreateUserModel } from '../shared/dtos/models/create-user.model';
 import { UpdateUserModel } from '../shared/dtos/models/update-user.model';
 import passport from 'passport';
-import './passport.js';
 const userRouter = express.Router();
 
 userRouter.get('/:id', function (req, res) {
@@ -19,14 +18,13 @@ userRouter.get('/', function (req, res) {
 userRouter.post(
   '/',
   dtoValidationMiddleware(CreateUserModel),
-  passport.authenticate('jwt', { session: false }),
   function (req, res) {
     userController.createUser(req, res);
   },
 );
 
 userRouter.put(
-  '/:id',
+  '/',
   dtoValidationMiddleware(UpdateUserModel),
   passport.authenticate('jwt', { session: false }),
   function (req, res) {
@@ -36,7 +34,6 @@ userRouter.put(
 
 userRouter.delete(
   '/:id',
-  dtoValidationMiddleware(UpdateUserModel),
   passport.authenticate('jwt', { session: false }),
   function (req, res) {
     userController.deleteUser(req, res);
