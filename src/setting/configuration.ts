@@ -10,7 +10,11 @@ export const dataSource = new DataSource({
   username: process.env.DB_USER,
   password: process.env.DB_ROOT_PASSWORD,
   database: process.env.DB_NAME,
-  entities: ['src/shared/entities/*.entity.ts'],
+  entities: [
+    (process.env.NODE_ENV = 'prod'
+      ? 'src/shared/entities/*.entity.js'
+      : 'src/shared/entities/*.entity.ts'),
+  ],
   logging: false,
   synchronize: true,
 });

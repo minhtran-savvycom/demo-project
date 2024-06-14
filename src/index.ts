@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import express, { Express } from 'express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-import router from './routers';
+import router from './routers/index';
 import { dataSource } from './setting/configuration';
 import options from './setting/swagger';
 import passport from './authentication/passport';
