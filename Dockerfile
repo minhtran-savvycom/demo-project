@@ -8,4 +8,6 @@ RUN npm install --force
 
 COPY . .
 
-CMD npm run start
+RUN npm run build
+
+CMD npm run prod
