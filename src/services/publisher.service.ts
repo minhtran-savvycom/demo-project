@@ -29,12 +29,26 @@ class PublisherService {
 
   async deletePublisher(req: Request, res: Response) {
     try {
-      const result = await dataSource
-        .getRepository(Publisher)
-        .delete(req.params.id);
-      if (result.affected === 0) {
+      const publisherRepository = dataSource.getRepository(Publisher);
+      const publisher = await publisherRepository.findOne({
+        where: { id: req.params.id },
+      });
+
+      if (!publisher) {
         return res.status(404).json({ error: 'Publisher not found' });
       }
+
+      const gameRepository = dataSource.getRepository(Game);
+      const games = await gameRepository.find({
+        where: { publisher: { id: publisher.id } },
+      });
+
+      for (const game of games) {
+        game.publisher = null;
+        await gameRepository.save(game);
+      }
+
+      await publisherRepository.delete(req.params.id);
       res.json({ message: 'Publisher deleted successfully' });
     } catch (error) {
       res
