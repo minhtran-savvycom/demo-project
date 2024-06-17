@@ -23,7 +23,9 @@ export class Game extends BaseIdentityEntity {
   })
   yearRelease: number;
 
-  @ManyToOne(() => Publisher, (p) => p.games)
+  @ManyToOne(() => Publisher, (p) => p.games, {
+    lazy: true,
+  })
   @JoinColumn({
     foreignKeyConstraintName: 'Game_Pulisher',
   })

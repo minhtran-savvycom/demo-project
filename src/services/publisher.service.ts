@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { dataSource } from '../setting/configuration';
 import { Publisher } from '../shared/entities/publisher.entity';
+import { Game } from 'shared/entities/game.entity';
 
 class PublisherService {
   private static _instance: PublisherService;
@@ -50,8 +51,23 @@ class PublisherService {
       if (!publisher) {
         return res.status(404).json({ error: 'Publisher not found' });
       }
-      dataSource.getRepository(Publisher).merge(publisher, req.body);
-      const result = await dataSource.getRepository(Publisher).save(publisher);
+
+      if (req?.body?.gameNames && Array.isArray(req.body.gameNames)) {
+        const gameNames = req.body.gameNames;
+        const games = await dataSource.getRepository(Game).find({
+          where: gameNames.map((name: any) => ({ name })),
+        });
+
+        if (!games || games.length !== gameNames.length) {
+          return res.status(400).json({ error: 'One or more games not found' });
+        }
+
+        req.body.games = games; // Associate the games with the user
+      }
+
+      const result = await dataSource
+        .getRepository(Publisher)
+        .save(dataSource.getRepository(Publisher).merge(publisher, req.body));
       res.json(result);
     } catch (error) {
       res
@@ -68,6 +84,7 @@ class PublisherService {
       if (!publisher) {
         return res.status(404).json({ error: 'Publisher not found' });
       }
+
       res.json(publisher);
     } catch (error) {
       res

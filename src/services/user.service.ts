@@ -69,13 +69,16 @@ class UserService {
       const user = await dataSource
         .getRepository(User)
         .findOneBy({ id: req?.user?.id.toString() });
+
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
       }
+
       if (req?.body?.password) {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         req.body.password = hashedPassword;
       }
+
       if (req?.body?.gameNames && Array.isArray(req.body.gameNames)) {
         const gameNames = req.body.gameNames;
         const games = await dataSource.getRepository(Game).find({

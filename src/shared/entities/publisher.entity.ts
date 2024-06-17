@@ -14,6 +14,9 @@ export class Publisher extends BaseIdentityEntity {
   })
   address: string;
 
-  @OneToMany(() => Game, (g) => g.publisher)
+  @OneToMany(() => Game, (g) => g.publisher, {
+    cascade: false,
+    eager: true,
+  })
   games: Game[];
 }

@@ -11,9 +11,9 @@ export const dataSource = new DataSource({
   password: process.env.DB_ROOT_PASSWORD,
   database: process.env.DB_NAME,
   entities: [
-    (process.env.NODE_ENV = 'prod'
+    process.env.NODE_ENV == 'prod'
       ? 'src/shared/entities/*.entity.js'
-      : 'src/shared/entities/*.entity.ts'),
+      : 'src/shared/entities/*.entity.ts',
   ],
   logging: false,
   synchronize: true,
