@@ -1,14 +1,39 @@
-import express, { Express, Request, Response } from 'express';
-const publisherController = express.Router();
+import { Request, Response } from 'express-serve-static-core';
+import publisherService from '../services/publisher.service';
 
-// Home page route.
-publisherController.get('/', function (req, res) {
-  res.send('Wiki home page');
-});
+class PublisherController {
+  private static _instance: PublisherController;
 
-// About page route.
-publisherController.get('/about', function (req, res) {
-  res.send('About this wiki');
-});
+  private constructor() {}
 
-export default publisherController;
+  static getInstance() {
+    if (this._instance) {
+      return this._instance;
+    }
+
+    this._instance = new PublisherController();
+    return this._instance;
+  }
+
+  createPublisher(req: Request, res: Response) {
+    publisherService.createPublisher(req, res);
+  }
+
+  deletePublisher(req: Request, res: Response) {
+    publisherService.deletePublisher(req, res);
+  }
+
+  updatePublisher(req: Request, res: Response) {
+    publisherService.updatePublisher(req, res);
+  }
+
+  findAllPublishers(req: Request, res: Response) {
+    publisherService.findAllPublishers(req, res);
+  }
+
+  getPublisherById(req: Request, res: Response) {
+    publisherService.getPublisherById(req, res);
+  }
+}
+
+export default PublisherController.getInstance();
